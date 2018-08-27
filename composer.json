@@ -4,6 +4,12 @@
     "type": "library",
     "homepage": "https://github.com/stylers-llc/laravel-email-change",
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/stylers-llc/laravel-email-verification.git"
+        }
+    ],
     "authors": [
         {
             "name": "Szilveszter Nagy",
