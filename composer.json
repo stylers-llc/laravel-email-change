@@ -47,6 +47,11 @@
             "Stylers\\EmailChange\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Stylers\\EmailChange\\Tests\\": "tests/"
+        }
+    },
     "config": {
         "sort-packages": true
     },
