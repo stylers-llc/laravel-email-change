@@ -1,0 +1,54 @@
+{
+    "name": "stylers/laravel-email-change",
+    "description": "Model can change own email and verify it",
+    "type": "library",
+    "homepage": "https://github.com/stylers-llc/laravel-email-change",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Szilveszter Nagy",
+            "email": "developer@stylersonline.com",
+            "homepage": "http://stylers.hu"
+        },
+        {
+            "name": "Ramon Nagy",
+            "email": "developer@stylersonline.com",
+            "homepage": "http://stylers.hu"
+        }
+    ],
+    "keywords": [
+        "stylers",
+        "laravel",
+        "email",
+        "change"
+    ],
+    "prefer-stable" : true,
+    "minimum-stability": "dev",
+    "require": {
+        "illuminate/support": "~5.0",
+        "illuminate/database": "~5.0",
+        "illuminate/queue": "~5.0",
+        "stylers/laravel-email-verification": "dev-master"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.1",
+        "phpunit/phpunit": "^7.0",
+        "orchestra/testbench": "~3.0",
+        "phpmd/phpmd": "^2.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Stylers\\EmailChange\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Stylers\\EmailChange\\ServiceProvider"
+            ]
+        }
+    }
+}
