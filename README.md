@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/stylers-llc/laravel-email-change.svg?branch=master)](https://travis-ci.org/stylers-llc/laravel-email-change)
+
 # Laravel Email Change (non-released)
 
 ## TODO
