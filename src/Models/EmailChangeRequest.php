@@ -34,6 +34,6 @@ class EmailChangeRequest extends Model implements EmailChangeRequestInterface
 
     public function getVerifiableName(): string
     {
-        return $this->emailChangeable()->first()->getNameAttribute();
+        return $this->emailChangeable()->first()->name;
     }
 }
