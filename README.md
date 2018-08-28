@@ -49,3 +49,6 @@ $changeRequestInstance = $emailChangeableUser->createEmailChangeRequest($newEmai
 ### Finish change request
 
 This package requires __Laravel Email Verification__ package and the ChangeEmail listener handle it's VerificationSuccess event. If you want to finish change request, you have to implement email-verification route. Read more: https://github.com/stylers-llc/laravel-email-verification#example-of-verification
+
+
+
