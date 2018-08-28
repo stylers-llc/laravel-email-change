@@ -13,7 +13,7 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         Event::listen(
-            'Stylers\EmailChange\Events\EmailChangeRequestCreating',
+            'Stylers\EmailChange\Events\EmailChangeRequestCreated',
             'Stylers\EmailChange\Listeners\SendEmailVerificationEmail'
         );
         Event::listen(

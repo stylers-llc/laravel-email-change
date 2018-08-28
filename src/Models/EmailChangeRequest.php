@@ -5,7 +5,7 @@ namespace Stylers\EmailChange\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Stylers\EmailChange\Contracts\EmailChangeRequestInterface;
-use Stylers\EmailChange\Events\EmailChangeRequestCreating;
+use Stylers\EmailChange\Events\EmailChangeRequestCreated;
 use Stylers\EmailVerification\Frameworks\Laravel\Models\Traits\EmailVerifiable;
 
 class EmailChangeRequest extends Model implements EmailChangeRequestInterface
@@ -17,7 +17,7 @@ class EmailChangeRequest extends Model implements EmailChangeRequestInterface
     ];
 
     protected $dispatchesEvents = [
-        'creating' => EmailChangeRequestCreating::class
+        'created' => EmailChangeRequestCreated::class
     ];
 
     public function emailChangeable(): MorphTo

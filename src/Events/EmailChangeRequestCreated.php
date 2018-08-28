@@ -5,7 +5,7 @@ namespace Stylers\EmailChange\Events;
 use Illuminate\Queue\SerializesModels;
 use Stylers\EmailChange\Contracts\EmailChangeRequestInterface;
 
-class EmailChangeRequestCreating
+class EmailChangeRequestCreated
 {
     use SerializesModels;
 
