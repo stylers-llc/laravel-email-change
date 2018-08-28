@@ -28,6 +28,7 @@
         "email",
         "change"
     ],
+    "prefer-dist": true,
     "minimum-stability": "dev",
     "require": {
         "illuminate/support": "~5.0",
