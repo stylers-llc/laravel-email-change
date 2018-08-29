@@ -18,6 +18,8 @@ class ChangeEmail
 
         /** @var EmailChangeRequestInterface $emailChangeRequest */
         $emailChangeRequest = $verificationRequest->getVerifiable();
-        $emailChangeRequest->persistChangeableEmail();
+        if ($emailChangeRequest instanceof EmailChangeRequestInterface) {
+            $emailChangeRequest->persistChangeableEmail();
+        }
     }
 }
