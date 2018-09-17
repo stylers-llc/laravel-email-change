@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Stylers\EmailChange\Contracts\EmailChangeRequestInterface;
 use Stylers\EmailChange\Events\EmailChangeRequestCreated;
+use Stylers\EmailVerification\EmailVerifiableInterface;
 use Stylers\EmailVerification\Frameworks\Laravel\Models\Traits\EmailVerifiable;
 
-class EmailChangeRequest extends Model implements EmailChangeRequestInterface
+class EmailChangeRequest extends Model implements EmailChangeRequestInterface, EmailVerifiableInterface
 {
     use EmailVerifiable;
     use SoftDeletes;

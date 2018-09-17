@@ -2,21 +2,30 @@
 
 namespace Stylers\EmailChange\Listeners;
 
-use Stylers\EmailChange\Contracts\EmailChangeRequestInterface;
 use Stylers\EmailChange\Models\EmailChangeRequest;
+use Stylers\EmailVerification\EmailVerifiableInterface;
 use Stylers\EmailVerification\EmailVerificationRequestInterface;
+use Stylers\EmailVerification\EmailVerificationServiceInterface;
 use Stylers\EmailVerification\Frameworks\Laravel\Events\VerificationSuccess;
 
 class ChangeEmail
 {
     /**
-     * @var EmailChangeRequestInterface
+     * @var EmailChangeRequest
      */
     private $changeRequestDAO;
+    /**
+     * @var EmailVerificationServiceInterface
+     */
+    private $emailVerificationService;
 
-    public function __construct()
+    public function __construct(
+        EmailChangeRequest $emailChangeRequestDAO,
+        EmailVerificationServiceInterface $emailVerificationService
+    )
     {
-        $this->changeRequestDAO = app(EmailChangeRequestInterface::class);
+        $this->changeRequestDAO = $emailChangeRequestDAO;
+        $this->emailVerificationService = $emailVerificationService;
     }
 
     /**
@@ -28,9 +37,20 @@ class ChangeEmail
         $verificationRequest = $event->getVerificationRequest();
 
         /** @var EmailChangeRequest[] $emailChangeRequests */
-        $emailChangeRequests = $this->changeRequestDAO->where('email', $verificationRequest->getEmail())->get();
+        $emailChangeRequests = $this->changeRequestDAO
+            ->with('emailChangeable')
+            ->where('email', $verificationRequest->getEmail())
+            ->get();
         foreach ($emailChangeRequests as $emailChangeRequest) {
             if ($verificationRequest->getType() === $emailChangeRequest->getVerificationType()) {
+                /** @var EmailVerifiableInterface $emailChangeable */
+                $emailChangeable = $emailChangeRequest->emailChangeable;
+                if ($emailChangeable) {
+                    $this->emailVerificationService->invalidateRequest(
+                        $emailChangeable->email,
+                        $emailChangeable->getVerificationType()
+                    );
+                }
                 $emailChangeRequest->persistChangeableEmail();
             }
         }

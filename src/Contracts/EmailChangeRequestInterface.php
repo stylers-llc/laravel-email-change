@@ -12,6 +12,4 @@ interface EmailChangeRequestInterface
     public function emailChangeable(): MorphTo;
 
     public function persistChangeableEmail(): void;
-
-    public function getVerificationType(): ?string;
 }

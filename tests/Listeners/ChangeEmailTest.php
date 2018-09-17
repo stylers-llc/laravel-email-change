@@ -26,7 +26,8 @@ class ChangeEmailTest extends BaseTestCase
         $verificationRequest->setEmail($expectedNewEmail);
         $verificationRequest->setType($emailChangeRequest->getVerificationType());
 
-        $listener = new ChangeEmail();
+        /** @var ChangeEmail $listener */
+        $listener = app(ChangeEmail::class);
         $listener->handle(new VerificationSuccess($verificationRequest));
         $user->refresh();
 
