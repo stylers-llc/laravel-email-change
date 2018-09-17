@@ -23,7 +23,8 @@ class ChangeEmailTest extends BaseTestCase
         $emailChangeRequest->emailChangeable()->associate($user)->save();
 
         $verificationRequest = new EmailVerificationRequest();
-        $verificationRequest->setVerifiable($emailChangeRequest);
+        $verificationRequest->setEmail($expectedNewEmail);
+        $verificationRequest->setType($emailChangeRequest->getVerificationType());
 
         $listener = new ChangeEmail();
         $listener->handle(new VerificationSuccess($verificationRequest));

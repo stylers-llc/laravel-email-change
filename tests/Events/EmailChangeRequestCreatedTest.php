@@ -24,7 +24,7 @@ class EmailChangeRequestCreatedTest extends BaseTestCase
         Event::assertDispatched(
             EmailChangeRequestCreated::class,
             function (EmailChangeRequestCreated $e) use ($emailChangeRequest) {
-                return $e->getEmailChangeRequest()->getId() === $emailChangeRequest->getId();
+                return $e->getEmailChangeRequest()->id === $emailChangeRequest->id;
             }
         );
     }

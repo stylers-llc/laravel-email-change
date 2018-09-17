@@ -15,9 +15,12 @@ class SendEmailVerificationEmail
     public function handle(EmailChangeRequestCreated $event)
     {
         $emailChangeRequest = $event->getEmailChangeRequest();
+        $changeable = $emailChangeRequest->emailChangeable()->first();
+
         /** @var EmailVerificationService $verificationService */
         $verificationService = app(EmailVerificationServiceInterface::class);
-        $verificationRequest = $verificationService->createEmailVerificationRequest($emailChangeRequest);
-        $verificationService->sendNotification($verificationRequest);
+        $verificationRequest = $verificationService
+            ->createRequest($emailChangeRequest->email, $emailChangeRequest->getVerificationType());
+        $verificationService->sendEmail($verificationRequest->getToken(), $changeable);
     }
 }

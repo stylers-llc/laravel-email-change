@@ -3,9 +3,8 @@
 namespace Stylers\EmailChange\Contracts;
 
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Stylers\EmailVerification\Frameworks\Laravel\Contracts\EmailVerifiableInterface;
 
-interface EmailChangeRequestInterface extends EmailVerifiableInterface
+interface EmailChangeRequestInterface
 {
     /**
      * @return MorphTo
@@ -13,4 +12,6 @@ interface EmailChangeRequestInterface extends EmailVerifiableInterface
     public function emailChangeable(): MorphTo;
 
     public function persistChangeableEmail(): void;
+
+    public function getVerificationType(): ?string;
 }

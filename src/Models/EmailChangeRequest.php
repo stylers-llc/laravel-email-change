@@ -4,6 +4,7 @@ namespace Stylers\EmailChange\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Stylers\EmailChange\Contracts\EmailChangeRequestInterface;
 use Stylers\EmailChange\Events\EmailChangeRequestCreated;
 use Stylers\EmailVerification\Frameworks\Laravel\Models\Traits\EmailVerifiable;
@@ -11,6 +12,7 @@ use Stylers\EmailVerification\Frameworks\Laravel\Models\Traits\EmailVerifiable;
 class EmailChangeRequest extends Model implements EmailChangeRequestInterface
 {
     use EmailVerifiable;
+    use SoftDeletes;
 
     protected $fillable = [
         'email'
@@ -35,5 +37,10 @@ class EmailChangeRequest extends Model implements EmailChangeRequestInterface
     public function getVerifiableName(): string
     {
         return $this->emailChangeable()->first()->name;
+    }
+
+    public function getVerificationType(): ?string
+    {
+        return self::class . '#' . $this->id;
     }
 }

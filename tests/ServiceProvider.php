@@ -17,10 +17,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $this->app->singleton(EmailVerificationServiceInterface::class, function ($app) {
             $verificationRequest = new EmailVerificationRequest();
+            $verificationRequest->setToken('test-token');
             $mock = Mockery::mock(EmailVerificationServiceInterface::class);
-            $mock->shouldReceive('createEmailVerificationRequest')
+            $mock->shouldReceive('createRequest')
                 ->andReturn($verificationRequest);
-            $mock->shouldReceive('sendNotification')
+            $mock->shouldReceive('sendEmail')
                 ->andReturnUndefined();
             return $mock;
         });

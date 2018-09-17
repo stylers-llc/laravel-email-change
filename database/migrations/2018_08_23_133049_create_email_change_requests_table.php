@@ -18,6 +18,7 @@ class CreateEmailChangeRequestsTable extends Migration
             $table->string('email');
             $table->morphs('email_changeable', 'idx_email_change_requests_changeable_morph');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
