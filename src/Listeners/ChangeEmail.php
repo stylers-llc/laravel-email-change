@@ -45,7 +45,7 @@ class ChangeEmail
                 /** @var EmailVerifiableInterface $emailChangeable */
                 $emailChangeable = $emailChangeRequest->emailChangeable()->first();
                 if ($emailChangeable) {
-                    $this->emailVerificationService->invalidateRequest(
+                    $this->emailVerificationService->revokeRequest(
                         $emailChangeable->email,
                         $emailChangeable->getVerificationType()
                     );

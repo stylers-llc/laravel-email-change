@@ -23,7 +23,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 ->andReturn($verificationRequest);
             $mock->shouldReceive('sendEmail')
                 ->andReturnUndefined();
-            $mock->shouldReceive('invalidateRequest')
+            $mock->shouldReceive('revokeRequest')
                 ->andReturnUndefined();
             return $mock;
         });
