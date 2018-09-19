@@ -31,12 +31,24 @@ php artisan migrate
 ### Set up the abstraction
 ```php
 use Illuminate\Database\Eloquent\Model;
+use Stylers\EmailVerification\NotifiableInterface;
+use Illuminate\Notifications\Notifiable;
+use Stylers\EmailVerification\EmailVerifiableInterface;
+use Stylers\EmailVerification\Frameworks\Laravel\Models\Traits\EmailVerifiable;
 use Stylers\EmailChange\Contracts\EmailChangeableInterface;
 use Stylers\EmailChange\Models\Traits\EmailChangeable;
 
-class User extends Model implements EmailChangeableInterface
+class User extends Model implements NotifiableInterface, EmailVerifiableInterface, EmailChangeableInterface
 {
+    use Notifiable;
+    use EmailVerifiable;
     use EmailChangeable;
+    ...
+    
+    public function getName(): string
+    {
+        return (string)$this->name;
+    }
 }
 ```
 
