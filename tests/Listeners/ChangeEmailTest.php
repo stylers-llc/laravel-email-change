@@ -2,12 +2,14 @@
 
 namespace Stylers\EmailChange\Tests\Listeners;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Stylers\EmailChange\Listeners\ChangeEmail;
 use Stylers\EmailChange\Models\EmailChangeRequest;
 use Stylers\EmailChange\Models\User;
 use Stylers\EmailChange\Tests\BaseTestCase;
 use Stylers\EmailVerification\Frameworks\Laravel\Events\VerificationSuccess;
 use Stylers\EmailVerification\Frameworks\Laravel\Models\EmailVerificationRequest;
+use Stylers\EmailVerification\EmailVerifiableInterface;
 
 class ChangeEmailTest extends BaseTestCase
 {
@@ -22,9 +24,7 @@ class ChangeEmailTest extends BaseTestCase
         $emailChangeRequest = factory(EmailChangeRequest::class)->make(['email' => $expectedNewEmail]);
         $emailChangeRequest->emailChangeable()->associate($user)->save();
 
-        $verificationRequest = new EmailVerificationRequest();
-        $verificationRequest->setEmail($expectedNewEmail);
-        $verificationRequest->setType($emailChangeRequest->getVerificationType());
+        $verificationRequest = $this->mockVerificationRequest($expectedNewEmail, $emailChangeRequest);
 
         /** @var ChangeEmail $listener */
         $listener = app(ChangeEmail::class);
@@ -33,4 +33,22 @@ class ChangeEmailTest extends BaseTestCase
 
         $this->assertEquals($expectedNewEmail, $user->email);
     }
+
+    /**
+     * @param $expectedNewEmail
+     * @param $emailChangeRequest
+     * @return MockObject|EmailVerificationRequest
+     */
+    private function mockVerificationRequest(
+        string $expectedNewEmail,
+        EmailVerifiableInterface $emailChangeRequest
+    ): MockObject
+    {
+        $mockRequest = $this->createMock(EmailVerificationRequest::class);
+        $mockRequest->method('getEmail')->willReturn($expectedNewEmail);
+        $mockRequest->method('getType')->willReturn($emailChangeRequest->getVerificationType());
+        $mockRequest->method('save')->willReturn(true);
+        return $mockRequest;
+    }
+
 }
