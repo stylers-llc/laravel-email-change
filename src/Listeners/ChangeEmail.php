@@ -38,20 +38,21 @@ class ChangeEmail
 
         /** @var EmailChangeRequest[] $emailChangeRequests */
         $emailChangeRequests = $this->changeRequestDAO
-            ->with('emailChangeable')
             ->where('email', $verificationRequest->getEmail())
             ->get();
         foreach ($emailChangeRequests as $emailChangeRequest) {
             if ($verificationRequest->getType() === $emailChangeRequest->getVerificationType()) {
                 /** @var EmailVerifiableInterface $emailChangeable */
-                $emailChangeable = $emailChangeRequest->emailChangeable;
+                $emailChangeable = $emailChangeRequest->emailChangeable()->first();
                 if ($emailChangeable) {
                     $this->emailVerificationService->invalidateRequest(
                         $emailChangeable->email,
                         $emailChangeable->getVerificationType()
                     );
+                    $verificationRequest->setType($emailChangeable->getVerificationType());
+                    $verificationRequest->save();
+                    $emailChangeRequest->persistChangeableEmail();
                 }
-                $emailChangeRequest->persistChangeableEmail();
             }
         }
     }
