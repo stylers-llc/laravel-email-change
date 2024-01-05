@@ -9,7 +9,7 @@ use Stylers\EmailChange\Tests\ServiceProvider as EmailChangeTestServiceProvider;
 
 class BaseTestCase extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpMigrations();

@@ -1,3 +1,5 @@
 vendor
 composer.lock
 /reports
+.phpunit.cache
+.phpunit.result.cache
